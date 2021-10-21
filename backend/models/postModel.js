@@ -3,21 +3,21 @@ const mongoose = require('mongoose')
 const postSchema = mongoose.Schema(
   {
     title: {
-      type: Strirng,
+      type: String,
       required: true,
       unique: true,
     },
     content: {
-      type: Strirng,
+      type: String,
       required: true,
     },
     photo: {
-      type: Strirng,
+      type: String,
       required: false,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: 'User',
     },
     categories: {
