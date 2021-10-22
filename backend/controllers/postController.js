@@ -20,4 +20,10 @@ postRouter.post('/', async (req, res) => {
   }
 })
 
+// app.get('/api/posts/:id', (req, res) => {
+//   const id = req.params.id
+//   const singlePost = posts.find((p) => p.id === Number(id))
+//   res.json(singlePost)
+// })
+
 module.exports = postRouter
