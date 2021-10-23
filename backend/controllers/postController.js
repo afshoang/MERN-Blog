@@ -4,14 +4,29 @@ const Post = require('../models/postModel')
 const protect = require('../middlewares/authMiddleware')
 
 /**
- * @desc Get all posts
+ * @desc Get all posts, or by username category
  * @route /api/posts
  * @access Public
  */
 postRoute.get(
   '/',
   asyncHandler(async (req, res) => {
-    const posts = await Post.find({})
+    // get username and category from req query
+    const username = req.query.username
+    const catName = req.query.cat
+    let posts
+    if (username) {
+      posts = await Post.find({ username })
+    } else if (catName) {
+      posts = await Post.find({
+        categories: {
+          $in: [catName],
+        },
+      })
+    } else {
+      posts = await Post.find({})
+    }
+
     res.json(posts)
   })
 )
@@ -39,7 +54,6 @@ postRoute.post(
   protect,
   asyncHandler(async (req, res, next) => {
     const { title, content } = req.body
-    console.log(req.user)
     const newPost = new Post({
       title,
       content,
