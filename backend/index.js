@@ -1,14 +1,18 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
+const multer = require('multer')
+const morgan = require('morgan')
 const connectDB = require('./config/db')
 const authRoute = require('./controllers/authController')
 const categoryRoute = require('./controllers/categoryController')
 const postRoute = require('./controllers/postController')
 const userRoute = require('./controllers/userController')
-const multer = require('multer')
 require('dotenv').config()
 
 app.use(express.json())
+app.use(cors())
+app.use(morgan('dev'))
 
 connectDB()
 

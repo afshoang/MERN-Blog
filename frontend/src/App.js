@@ -25,6 +25,9 @@ const App = () => {
           <Route path='/write'>
             <Write />
           </Route>
+          <Route path='/post/:postId'>
+            <Single />
+          </Route>
           <Route path='/'>
             <Home />
           </Route>

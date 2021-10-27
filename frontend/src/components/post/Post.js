@@ -1,6 +1,17 @@
 import './post.css'
+import { Link } from 'react-router-dom'
 
-const Post = () => {
+const Post = ({ post }) => {
+  /* 
+    Get time from mongoDB convert to string day or hour was created
+  **/
+  const convertTime = (timeInMil) => {
+    const timeCreated = new Date(Date.now() - new Date(timeInMil).getTime())
+    return timeCreated.getDate() > 0
+      ? timeCreated.getDate() + ' ngày trước'
+      : timeCreated.getHours() + ' giờ trước'
+  }
+
   return (
     <div className='post'>
       <img
@@ -10,14 +21,19 @@ const Post = () => {
       />
       <div className='postInfo'>
         <div className='postCats'>
+          {post.categories.map((cat) => (
+            <span className='postCat'>{cat}</span>
+          ))}
           <span className='postCat'>Book</span>
           <span className='postCat'>NodeJs</span>
         </div>
         <span className='postTitle'>
-          Ad sint sunt occaecat adipisicing cupidatat dolor.
+          <Link to={`/post/${post.id}`} className='link'>
+            {post.title}
+          </Link>
         </span>
         <hr />
-        <span className='postDate'>1 hour ago</span>
+        <span className='postDate'>{convertTime(post.createdAt)}</span>
       </div>
       <p className='postDesc'>
         Eiusmod fugiat veniam do proident laboris laboris amet aliquip voluptate
