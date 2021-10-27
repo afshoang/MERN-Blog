@@ -15,12 +15,12 @@ const importData = async () => {
 
     const createdUser = await User.insertMany(users)
 
-    const firstUser = createdUser[0]._id
+    const firstUser = createdUser[0].username
 
     const samplePosts = posts.map((post) => {
       return {
         ...post,
-        user: firstUser,
+        username: firstUser,
       }
     })
     await Post.insertMany(samplePosts)
