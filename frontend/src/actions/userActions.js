@@ -30,6 +30,12 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo')
+  dispatch({ type: 'USER_LOGOUT' })
+  // document.location.href = '/'
+}
+
 export const register = (username, email, password) => async (dispatch) => {
   try {
     dispatch({ type: 'USER_REGISTER_REQUEST' })

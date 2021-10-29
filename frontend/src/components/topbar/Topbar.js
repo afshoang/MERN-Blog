@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux'
 import './topbar.css'
 import { Link } from 'react-router-dom'
+import { logout } from '../../actions/userActions'
 
 const Topbar = () => {
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   return (
     <div className='top'>
@@ -30,6 +35,11 @@ const Topbar = () => {
           </li>
           <li className='topListItem'>ABOUT</li>
           <li className='topListItem'>CONTACT</li>
+          {userInfo && (
+            <li className='topListItem' onClick={() => handleLogout()}>
+              LOGOUT
+            </li>
+          )}
         </ul>
       </div>
       <div className='topRight'>
