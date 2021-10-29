@@ -22,7 +22,9 @@ const Post = ({ post }) => {
       <div className='postInfo'>
         <div className='postCats'>
           {post.categories.map((cat) => (
-            <span className='postCat'>{cat}</span>
+            <span key={cat} className='postCat'>
+              {cat}
+            </span>
           ))}
           <span className='postCat'>Book</span>
           <span className='postCat'>NodeJs</span>
