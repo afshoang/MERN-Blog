@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const multer = require('multer')
+const path = require('path')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
 const { errorHandler } = require('./middlewares/errorMiddleware')
@@ -14,6 +15,8 @@ require('dotenv').config()
 app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 connectDB()
 

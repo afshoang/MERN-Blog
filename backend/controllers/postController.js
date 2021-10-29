@@ -53,14 +53,14 @@ postRoute.post(
   '/',
   protect,
   asyncHandler(async (req, res, next) => {
-    const { title, content } = req.body
+    // const { title, content } =
+    console.log(req.body)
     const newPost = new Post({
-      title,
-      content,
-      user: req.user._id,
+      ...req.body,
+      username: req.user.username,
     })
     const savedPost = await newPost.save()
-    res.json(savedPost)
+    res.status(201).json(savedPost)
   })
 )
 

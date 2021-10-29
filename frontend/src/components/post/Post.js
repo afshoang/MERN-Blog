@@ -12,11 +12,12 @@ const Post = ({ post }) => {
       : timeCreated.getHours() + ' giờ trước'
   }
 
+  const publicFolder = 'http://localhost:5000/uploads/'
   return (
     <div className='post'>
       <img
         className='postImg'
-        src='https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=873&q=80'
+        src={publicFolder + post.photo}
         alt='single post'
       />
       <div className='postInfo'>
