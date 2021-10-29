@@ -2,7 +2,7 @@ const authRoute = require('express').Router()
 const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const bcryptjs = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const generateToken = require('../utils/generateToken')
 
 /**
  * @desc Register a new user
@@ -14,11 +14,19 @@ authRoute.post(
   asyncHandler(async (req, res, next) => {
     const { username, email, password } = req.body
 
+    const userExisted = await User.findOne({ username })
+
+    console.log(userExisted)
+
+    if (userExisted) {
+      res.status(400)
+      throw new Error('Tài khoản đã tồn tại')
+    }
+
     // hash password
     const salt = 10
     const hashPassword = await bcryptjs.hash(password, salt)
     // end hash
-    console.log(hashPassword)
 
     const newUser = new User({
       username,
@@ -27,7 +35,17 @@ authRoute.post(
     })
 
     const savedUser = await newUser.save()
-    res.json(savedUser)
+
+    if (savedUser) {
+      res.status(201).json({
+        id: savedUser._id,
+        username: savedUser.username,
+        token: generateToken(savedUser._id),
+      })
+    } else {
+      res.status(400)
+      throw new Error('Dữ liệu nhập vào không hợp lệ!')
+    }
   })
 )
 
@@ -39,9 +57,10 @@ authRoute.post(
 authRoute.post(
   '/login',
   asyncHandler(async (req, res) => {
-    const { username, password } = req.body
+    const { email, password } = req.body
 
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ email })
+    console.log(user)
     const passwordMatch =
       user === null ? false : await bcryptjs.compare(password, user.password)
 
@@ -49,13 +68,10 @@ authRoute.post(
       res.status(401).json({ message: 'Tài khoản hoặc mật khẩu không hợp lệ' })
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '30d',
-    })
-
     res.json({
+      id: user._id,
       username: user.username,
-      token,
+      token: generateToken(user._id),
     })
   })
 )

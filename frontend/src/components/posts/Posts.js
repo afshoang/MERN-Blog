@@ -5,7 +5,7 @@ const Posts = ({ posts }) => {
   return (
     <div className='posts'>
       {posts.map((post) => (
-        <Post post={post} key={post.id} />
+        <Post key={post.id} post={post} />
       ))}
     </div>
   )

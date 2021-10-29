@@ -4,6 +4,7 @@ const cors = require('cors')
 const multer = require('multer')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
+const { errorHandler } = require('./middlewares/errorMiddleware')
 const authRoute = require('./controllers/authController')
 const categoryRoute = require('./controllers/categoryController')
 const postRoute = require('./controllers/postController')
@@ -38,6 +39,9 @@ app.use('/api/auth', authRoute)
 app.use('/api/posts', postRoute)
 app.use('/api/users', userRoute)
 app.use('/api/categories', categoryRoute)
+
+// Middleware for handle error
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {

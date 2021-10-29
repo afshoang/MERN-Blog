@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Topbar from './components/topbar/Topbar'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'

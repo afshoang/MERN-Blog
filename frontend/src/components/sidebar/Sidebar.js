@@ -1,6 +1,18 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { listCategory } from '../../actions/categoryActions'
 import './sidebar.css'
 
 const Sidebar = () => {
+  const dispatch = useDispatch()
+  const categoryList = useSelector((state) => state.categoryList)
+  const { categories } = categoryList
+
+  useEffect(() => {
+    dispatch(listCategory())
+  }, [dispatch])
+
   return (
     <div className='sidebar'>
       <div className='sidebarItem'>
@@ -17,10 +29,17 @@ const Sidebar = () => {
       <div className='sidebarItem'>
         <span className='sidebarTitle'>CATEGORIES</span>
         <ul className='sidebarList'>
-          <li className='sidebarListItem'>Javascript</li>
-          <li className='sidebarListItem'>ReactJs</li>
-          <li className='sidebarListItem'>NodeJs</li>
-          <li className='sidebarListItem'>Book</li>
+          {categories.map((category) => {
+            return (
+              <Link
+                className='link'
+                key={category._id}
+                to={`/?cat=${category.name}`}
+              >
+                <li className='sidebarListItem'>{category.name}</li>
+              </Link>
+            )
+          })}
         </ul>
       </div>
       <div className='sidebarItem'>

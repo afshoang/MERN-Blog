@@ -6,6 +6,7 @@ import Header from '../../components/header/Header'
 import Posts from '../../components/posts/Posts'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { listPosts } from '../../actions/postActions'
+import Spinner from '../../components/spinner/Spinner'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -22,8 +23,16 @@ const Home = () => {
     <>
       <Header />
       <div className='home'>
-        <Posts posts={posts} />
-        <Sidebar />
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <h1>{error}</h1>
+        ) : (
+          <>
+            <Posts posts={posts} />
+            <Sidebar />
+          </>
+        )}
       </div>
     </>
   )

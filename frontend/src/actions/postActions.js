@@ -8,8 +8,6 @@ export const listPosts =
 
       let link = `/api/posts${search}`
 
-      console.log(search)
-
       const { data } = await axios.get(link)
 
       dispatch({ type: 'POST_LIST_SUCCESS', payload: data })

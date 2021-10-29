@@ -5,11 +5,6 @@ const asyncHandler = require('express-async-handler')
 const bcryptjs = require('bcryptjs')
 
 /**
- * @desc Login
- * @route /api/users
- */
-
-/**
  * @desc Fetch user by Id
  * @route /api/users/:id
  * @access admin
