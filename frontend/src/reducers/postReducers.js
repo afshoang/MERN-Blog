@@ -38,3 +38,31 @@ export const postCreateReducer = (state = { post: {} }, action) => {
       return state
   }
 }
+
+export const postUpdateReducer = (state = { post: {} }, action) => {
+  switch (action.type) {
+    case 'POST_UPDATE_REQUEST':
+      return { loading: true }
+    case 'POST_UPDATE_SUCCESS':
+      return { loading: false, success: true, post: action.payload }
+    case 'POST_UPDATE_FAIL':
+      return { loading: false, error: action.payload }
+    case 'POST_UPDATE_RESET':
+      return { post: {} }
+    default:
+      return state
+  }
+}
+
+export const postDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'POST_DELETE_REQUEST':
+      return { loading: true }
+    case 'POST_DELETE_SUCCESS':
+      return { loading: false, success: true }
+    case 'POST_DELETE_FAIL':
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}

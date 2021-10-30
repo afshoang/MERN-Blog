@@ -27,8 +27,6 @@ const Post = ({ post }) => {
               {cat}
             </span>
           ))}
-          <span className='postCat'>Book</span>
-          <span className='postCat'>NodeJs</span>
         </div>
         <span className='postTitle'>
           <Link to={`/post/${post.id}`} className='link'>
@@ -38,18 +36,7 @@ const Post = ({ post }) => {
         <hr />
         <span className='postDate'>{convertTime(post.createdAt)}</span>
       </div>
-      <p className='postDesc'>
-        Eiusmod fugiat veniam do proident laboris laboris amet aliquip voluptate
-        deserunt officia nulla sit excepteur. Et ullamco irure aute adipisicing
-        mollit ex. Sunt do et elit deserunt consequat. Proident aliqua ut minim
-        ex officia. Eiusmod fugiat veniam do proident laboris laboris amet
-        aliquip voluptate deserunt officia nulla sit excepteur. Et ullamco irure
-        aute adipisicing mollit ex. Sunt do et elit deserunt consequat. Proident
-        aliqua ut minim ex officia. Eiusmod fugiat veniam do proident laboris
-        laboris amet aliquip voluptate deserunt officia nulla sit excepteur. Et
-        ullamco irure aute adipisicing mollit ex. Sunt do et elit deserunt
-        consequat. Proident aliqua ut minim ex officia.
-      </p>
+      <p className='postDesc'>{post.content}</p>
     </div>
   )
 }

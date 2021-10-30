@@ -44,6 +44,10 @@
   outline: none;
 }
 
+.categoryInput {
+  padding-right: 10px;
+}
+
 .writeText {
   font-size: 20px;
   height: 100vh;

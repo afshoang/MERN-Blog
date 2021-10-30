@@ -53,12 +53,11 @@ postRoute.post(
   '/',
   protect,
   asyncHandler(async (req, res, next) => {
-    // const { title, content } =
-    console.log(req.body)
     const newPost = new Post({
       ...req.body,
       username: req.user.username,
     })
+    console.log(newPost)
     const savedPost = await newPost.save()
     res.status(201).json(savedPost)
   })
@@ -74,7 +73,7 @@ postRoute.put(
   protect,
   asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
-    if (post.user.toString() === req.user._id.toString()) {
+    if (post.username === req.user.username) {
       const updatedPost = await Post.findByIdAndUpdate(
         req.params.id,
         {
@@ -99,7 +98,7 @@ postRoute.delete(
   protect,
   asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.id)
-    if (post.user.toString() === req.user._id.toString()) {
+    if (post.username === req.user.username) {
       await Post.findByIdAndRemove(req.params.id)
       res.status(200).json({ message: 'Đã xóa bài viết' })
     } else {

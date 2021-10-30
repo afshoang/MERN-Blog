@@ -8,26 +8,37 @@ import './write.css'
 const Write = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [category, setCategory] = useState([])
   const [file, setFile] = useState(null)
 
   const dispatch = useDispatch()
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const postCreate = useSelector((state) => state.postCreate)
-  const { loading, post, success: successCreate } = postCreate
+  const { post, success: successCreate } = postCreate
+
+  const categoryList = useSelector((state) => state.categoryList)
+  const { categories: categoriesState } = categoryList
 
   const history = useHistory()
 
   useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
     if (successCreate) {
       history.push(`/post/${post.id}`)
       dispatch({ type: 'POST_CREATE_RESET' })
     }
-  }, [dispatch, history, successCreate, post])
+  }, [dispatch, history, userInfo, successCreate, post])
 
   const handleSubmitPuslish = async (e) => {
     e.preventDefault()
     const newPost = {
       title,
       content,
+      categories: category,
     }
     if (file) {
       const data = new FormData()
@@ -43,6 +54,17 @@ const Write = () => {
     setTitle('')
     setContent('')
   }
+
+  const handleChangeCategory = (e) => {
+    // change category
+    if (!category.includes(e.target.value))
+      setCategory([...category, e.target.value])
+    if (!e.target.checked) {
+      setCategory(category.filter((cat) => cat !== e.target.value))
+    }
+  }
+
+  console.log(category)
 
   return (
     <div className='write'>
@@ -68,6 +90,24 @@ const Write = () => {
             className='writeInput'
             autoFocus={true}
           />
+        </div>
+        <div className='writeFormGroup'>
+          {categoriesState.map((category) => (
+            <label
+              key={category._id}
+              htmlFor={category.name}
+              className='categoryInput'
+            >
+              <input
+                type='checkbox'
+                id={category.name}
+                name='interest'
+                value={category.name}
+                onChange={handleChangeCategory}
+              />{' '}
+              {category.name}
+            </label>
+          ))}
         </div>
         <div className='writeFormGroup'>
           <textarea

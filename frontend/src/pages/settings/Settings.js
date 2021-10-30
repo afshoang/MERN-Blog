@@ -1,7 +1,21 @@
+import { useEffect } from 'react'
 import './settings.css'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import Sidebar from '../../components/sidebar/Sidebar'
 
 const Settings = () => {
+  const history = useHistory()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [history, userInfo])
+
   return (
     <div className='settings'>
       <div className='settingsWrapper'>
