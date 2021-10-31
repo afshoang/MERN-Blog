@@ -9,7 +9,12 @@ import {
   postDeleteReducer,
 } from './reducers/postReducers'
 import { categoryListReducer } from './reducers/categoryReducers'
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailReducer,
+  userUpdateReducer,
+} from './reducers/userReducers'
 
 const reducer = combineReducers({
   postList: postListReducer,
@@ -20,6 +25,8 @@ const reducer = combineReducers({
   categoryList: categoryListReducer,
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
+  userDetail: userDetailReducer,
+  userUpdate: userUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

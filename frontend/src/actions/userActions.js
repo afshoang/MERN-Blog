@@ -67,3 +67,54 @@ export const register = (username, email, password) => async (dispatch) => {
     })
   }
 }
+
+export const getUserDetail = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: 'USER_DETAIL_REQUEST' })
+
+    const { data } = await axios.get(`/api/users/${id}`)
+
+    dispatch({ type: 'USER_DETAIL_SUCCESS', payload: data })
+  } catch (error) {
+    dispatch({
+      type: 'USER_DETAIL_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const update = (id, userToUpdate) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: 'USER_UPDATE_REQUEST' })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(`/api/users/${id}`, userToUpdate, config)
+
+    dispatch({ type: 'USER_UPDATE_SUCCESS' })
+
+    dispatch({ type: 'USER_DETAIL_SUCCESS', payload: data })
+
+    dispatch({ type: 'USER_DETAIL_RESET' })
+  } catch (error) {
+    dispatch({
+      type: 'USER_UPDATE_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}

@@ -7,12 +7,12 @@ const bcryptjs = require('bcryptjs')
 /**
  * @desc Fetch user by Id
  * @route /api/users/:id
- * @access admin
+ * @access Private
  */
 userRoute.get(
   '/:id',
   asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id).select('-password')
 
     if (user) {
       res.json(user)
