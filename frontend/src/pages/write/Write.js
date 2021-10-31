@@ -9,7 +9,7 @@ const Write = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [category, setCategory] = useState([])
-  const [file, setFile] = useState(null)
+  const [image, setImage] = useState('')
 
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
@@ -39,20 +39,13 @@ const Write = () => {
       title,
       content,
       categories: category,
-    }
-    if (file) {
-      const data = new FormData()
-      const filename = Date.now() + file.name
-      data.append('name', filename)
-      data.append('file', file)
-      newPost.photo = filename
-      try {
-        await axios.post('/api/upload', data)
-      } catch (error) {}
+      photo: image,
     }
     dispatch(createPost(newPost))
     setTitle('')
     setContent('')
+    setImage('')
+    setCategory([])
   }
 
   const handleChangeCategory = (e) => {
@@ -64,20 +57,36 @@ const Write = () => {
     }
   }
 
-  console.log(category)
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className='write'>
-      {file && (
-        <img className='writeImg' src={URL.createObjectURL(file)} alt='write' />
-      )}
+      {image && <img className='writeImg' src={image} alt='write' />}
       <form className='writeForm' onSubmit={handleSubmitPuslish}>
         <div className='writeFormGroup'>
           <label htmlFor='fileInput'>
             <i className='writeIcon fas fa-plus'></i>
           </label>
           <input
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={uploadFileHandler}
             type='file'
             id='fileInput'
             style={{ display: 'none' }}
@@ -92,22 +101,23 @@ const Write = () => {
           />
         </div>
         <div className='writeFormGroup'>
-          {categoriesState.map((category) => (
-            <label
-              key={category._id}
-              htmlFor={category.name}
-              className='categoryInput'
-            >
-              <input
-                type='checkbox'
-                id={category.name}
-                name='interest'
-                value={category.name}
-                onChange={handleChangeCategory}
-              />{' '}
-              {category.name}
-            </label>
-          ))}
+          {categoriesState &&
+            categoriesState.map((category) => (
+              <label
+                key={category._id}
+                htmlFor={category.name}
+                className='categoryInput'
+              >
+                <input
+                  type='checkbox'
+                  id={category.name}
+                  name='interest'
+                  value={category.name}
+                  onChange={handleChangeCategory}
+                />{' '}
+                {category.name}
+              </label>
+            ))}
         </div>
         <div className='writeFormGroup'>
           <textarea

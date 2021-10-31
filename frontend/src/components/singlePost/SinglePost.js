@@ -54,7 +54,7 @@ const SinglePost = () => {
     setUpdateMode(false)
   }
 
-  const publicFolder = 'http://localhost:5000/uploads/'
+  // const publicFolder = 'http://localhost:5000/uploads/'
 
   return (
     <>
@@ -69,7 +69,7 @@ const SinglePost = () => {
             {post.photo && (
               <img
                 className='singlePostImg'
-                src={publicFolder + post.photo}
+                src={post.photo}
                 alt='single post'
               />
             )}
@@ -84,7 +84,7 @@ const SinglePost = () => {
             ) : (
               <h1 className='singlePostTitle'>
                 {post.title}
-                {userInfo.username === post.username && (
+                {userInfo && post.username === userInfo.username && (
                   <div className='singlePostEdit'>
                     <i
                       onClick={() => {

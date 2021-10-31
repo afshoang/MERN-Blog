@@ -12,14 +12,10 @@ const Post = ({ post }) => {
       : timeCreated.getHours() + ' giờ trước'
   }
 
-  const publicFolder = 'http://localhost:5000/uploads/'
+  // const publicFolder = 'http://localhost:5000/uploads/'
   return (
     <div className='post'>
-      <img
-        className='postImg'
-        src={publicFolder + post.photo}
-        alt='single post'
-      />
+      <img className='postImg' src={post.photo} alt='single post' />
       <div className='postInfo'>
         <div className='postCats'>
           {post.categories.map((cat) => (
