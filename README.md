@@ -1,8 +1,19 @@
-# My Awesome Project
+# MERN Blog
 
-Write a short sentence or two about this project and what it does. Be sure to include a link and a screenshot (we're front end devs so we can actually see our work!).
+Full Stack Blog App built with React, Redux, NodeJs, MongoDB and deployed with Heroku
 
-**Link to project:** http://recruiters-love-seeing-live-demos.com/
+**Link to project:** https://mernbloghp.herokuapp.com/
+
+```
+Sample User Logins
+
+admin@gmail.com
+123456
+
+hoangpham@gmail.com
+123456
+
+```
 
 ![alt tag](http://placecorgi.com/1200/650)
 
@@ -10,24 +21,37 @@ Write a short sentence or two about this project and what it does. Be sure to in
 
 **Tech used:** HTML, CSS, JavaScript, React, NodeJs, MongoDB
 
-Here's where you can go to town on how you actually built this thing. Write as much as you can here, it's totally fine if it's not too much just make sure you write _something_. If you don't have too much experience on your resume working on the front end that's totally fine. This is where you can really show off your passion and make up for that ten fold.
+## Usage
 
-## Optimizations
+### Env Variables
 
-_(optional)_
+Create a .env file in then root and add the following
 
-You don't have to include this section but interviewers _love_ that you can not only deliver a final product that looks great but also functions efficiently. Did you write something then refactor it later and the result was 5x faster than the original implementation? Did you cache your assets? Things that you write in this section are **GREAT** to bring up in interviews and you can use this section as reference when studying for technical interviews!
+```
+NODE_ENV = development
+PORT = 5000
+MONGO_URI = your mongodb uri
+JWT_SECRET = 'abc123'
+PAYPAL_CLIENT_ID = your paypal client id
+```
 
-## Lessons Learned:
+### Install Dependencies (frontend & backend)
 
-No matter what your experience level, being an engineer means continuously learning. Every time you build something you always have those _whoa this is awesome_ or _fuck yeah I did it!_ moments. This is where you should share those moments! Recruiters and interviewers love to see that you're self-aware and passionate about growing.
+```
+cd frontend
+npm install
+cd frontend
+npm install
+```
 
-## Examples:
+### Seed Database
 
-Take a look at these couple examples that I have in my own portfolio:
+You can use the following commands to seed the database with some sample users and products as well as destroy all data
 
-**Palettable:** https://github.com/alecortega/palettable
+```
+# Import data
+npm run data:import
 
-**Twitter Battle:** https://github.com/alecortega/twitter-battle
-
-**Patch Panel:** https://github.com/alecortega/patch-panel
+# Destroy data
+npm run data:destroy
+```
