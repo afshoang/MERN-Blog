@@ -60,7 +60,6 @@ authRoute.post(
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
-    console.log(user)
     const passwordMatch =
       user === null ? false : await bcryptjs.compare(password, user.password)
 
@@ -71,6 +70,7 @@ authRoute.post(
     res.json({
       id: user._id,
       username: user.username,
+      profilePic: user.profilePic,
       token: generateToken(user._id),
     })
   })

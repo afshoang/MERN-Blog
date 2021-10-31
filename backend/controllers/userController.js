@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const Post = require('../models/postModel')
 const asyncHandler = require('express-async-handler')
 const bcryptjs = require('bcryptjs')
+const protect = require('../middlewares/authMiddleware')
 
 /**
  * @desc Fetch user by Id
@@ -61,10 +62,11 @@ userRoute.put(
 
 userRoute.delete(
   '/:id',
+  protect,
   asyncHandler(async (req, res, next) => {
-    await Post.deleteMany({ user: req.params.id })
+    await Post.deleteMany({ username: req.user.username })
     await User.findByIdAndRemove(req.params.id)
-    res.json({ message: 'Đã xóa tài khoản!' })
+    res.status(200).json({ message: 'Đã xóa tài khoản!' })
   })
 )
 

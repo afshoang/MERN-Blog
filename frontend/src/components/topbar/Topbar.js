@@ -2,12 +2,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import './topbar.css'
 import { Link } from 'react-router-dom'
 import { logout } from '../../actions/userActions'
+import avatar from './avatar.jpg'
 
 const Topbar = () => {
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  const userDetail = useSelector((state) => state.userDetail)
+  const { user } = userDetail
 
   const handleLogout = () => {
     dispatch(logout())
@@ -46,7 +50,7 @@ const Topbar = () => {
         {userInfo ? (
           <Link className='link' to='/settings'>
             <img
-              src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg/450px-Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg'
+              src={userInfo.profilePic === '' ? avatar : userInfo.profilePic}
               alt='icon top bar'
               className='topImg'
             />

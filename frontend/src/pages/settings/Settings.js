@@ -3,7 +3,7 @@ import axios from 'axios'
 import './settings.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { getUserDetail, update } from '../../actions/userActions'
+import { getUserDetail, update, deleteUser } from '../../actions/userActions'
 import Sidebar from '../../components/sidebar/Sidebar'
 
 const Settings = () => {
@@ -52,6 +52,14 @@ const Settings = () => {
     dispatch(update(user.id, userToUpdate))
   }
 
+  const handleDeleteUser = () => {
+    if (
+      window.confirm('Bạn có chắc chắn muốn xóa tài khoản và toàn bộ bài viết?')
+    ) {
+      dispatch(deleteUser(userInfo.id))
+    }
+  }
+
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
     const formData = new FormData()
@@ -77,7 +85,9 @@ const Settings = () => {
       <div className='settingsWrapper'>
         <div className='settingsTitle'>
           <span className='settingsUpdateTitle'>Update your account</span>
-          <span className='settingsDeleteTitle'>Delete your account</span>
+          <span className='settingsDeleteTitle' onClick={handleDeleteUser}>
+            Delete your account
+          </span>
         </div>
         <form className='settingsForm' onSubmit={handleUpdate}>
           <label>Profile Picture</label>
@@ -112,6 +122,13 @@ const Settings = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className='settingsSubmit'>Update</button>
+          {successUpdate && (
+            <span
+              style={{ color: 'green', textAlign: 'center', marginTop: '20px' }}
+            >
+              Đã cập nhật tài khoản...
+            </span>
+          )}
         </form>
       </div>
       <Sidebar />
