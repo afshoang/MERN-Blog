@@ -15,7 +15,7 @@ hoangpham@gmail.com
 
 ```
 
-![alt tag](http://placecorgi.com/1200/650)
+![scren shot](https://github.com/afshoang/MERN-Blog/blob/main/backend/uploads/demoSreen.png)
 
 ## How It's Made:
 
