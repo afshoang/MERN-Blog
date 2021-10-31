@@ -41,17 +41,15 @@ app.use('/api/users', userRoute)
 app.use('/api/categories', categoryRoute)
 app.use('/api/upload', uploadRoute)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/frontend/build')))
+app.use(express.static(path.join(__dirname, '/frontend/build')))
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  })
-} else {
-  app.get('/', (req, res) => {
-    res.send('Hello World')
-  })
-}
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+})
+
+// app.get('/', (req, res) => {
+//   res.send('Hello World')
+// })
 
 // Middleware for handle error
 app.use(errorHandler)
